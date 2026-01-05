@@ -41,7 +41,6 @@ export default function ProductCard({ product }: { product: Product }) {
             title:product.title,
             description: product.description,
             thumbnail: product.thumbnail,
-            qty: 1,
             price: product.price, 
           })
         }
