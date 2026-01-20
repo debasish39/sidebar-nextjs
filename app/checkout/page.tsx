@@ -9,6 +9,13 @@ export default function CheckoutPage() {
   const { cart, totalPrice } = useCart();
   const router = useRouter();
   const [upiId, setUpiId] = useState("sonupanda0999-1@okhdfcbank");
+  const [showUpi, setShowUpi] = useState(false);
+const maskUpi = (upi) => {
+  const [name, bank] = upi.split("@");
+  console.log(name,bank)
+  return `${name.slice(0, 2)}******@${bank}`;
+};
+
   // 🔗 UPI INTENT URL
   const upiUrl = `upi://pay?pa=${upiId}&pn=JSK Store&am=${totalPrice}&cu=INR&tn=Order Payment`;
 
@@ -75,16 +82,11 @@ export default function CheckoutPage() {
                   </div>
                 </div>
               ))}
+              
             </div>
+            
           </div>
-        </div>
-
-        {/* RIGHT COLUMN */}
-        <div className="space-y-6 lg:sticky lg:top-8 h-fit">
-          {/* Spacer for alignment with left title */}
-          <div className="hidden lg:block h-10" />
-
-          {/* PRICE DETAILS */}
+             {/* PRICE DETAILS */}
           <div className="bg-white rounded-2xl shadow-sm border p-6 space-y-4">
             <h2 className="font-medium">Price Details</h2>
 
@@ -103,6 +105,14 @@ export default function CheckoutPage() {
               <span>₹{totalPrice}</span>
             </div>
           </div>
+        </div>
+
+        {/* RIGHT COLUMN */}
+        <div className="space-y-6 lg:sticky lg:top-8 h-fit">
+          {/* Spacer for alignment with left title */}
+          <div className="hidden lg:block h-10" />
+
+       
 
           {/* ADDRESS */}
           <div className="bg-white rounded-2xl shadow-sm border p-6 space-y-4">
@@ -127,13 +137,35 @@ export default function CheckoutPage() {
             <h2 className="font-medium text-lg">Pay via UPI</h2>
 
             {/* UPI ID INPUT */}
-            <input
-              value={upiId}
-              onChange={(e) => setUpiId(e.target.value)}
-              placeholder="example@upi"
-              className="border w-full px-3 py-2.5 rounded-lg text-sm
-                         focus:ring-2 focus:ring-black outline-none"
-            />
+       <div className="space-y-1">
+  <div className="flex items-center justify-between">
+    <label className="text-sm font-medium">UPI ID</label>
+    <button
+      type="button"
+      onClick={() => setShowUpi(!showUpi)}
+      className="text-sm text-blue-600 hover:underline"
+    >
+      {showUpi ? "Hide" : "Show"}
+    </button>
+  </div>
+
+  {/* UPI FIELD */}
+  <input
+    value={showUpi ? upiId : maskUpi(upiId)}
+    readOnly
+    onCopy={(e) => !showUpi && e.preventDefault()}
+    onCut={(e) => e.preventDefault()}
+    className="border w-full px-3 py-2.5 rounded-lg text-sm
+               bg-gray-100 font-mono cursor-default select-none"
+  />
+
+  {!showUpi && (
+    <p className="text-xs text-gray-500">
+      UPI ID hidden for security
+    </p>
+  )}
+</div>
+
 
             {/* QR CODE */}
             <div className="flex justify-center">

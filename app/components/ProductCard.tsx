@@ -2,7 +2,7 @@
 
 import { useCart } from "../context/CartContext";
 import Image from "next/image";
-
+import Link from "next/link";
 type Product = {
   id: number;
   title: string;
@@ -16,6 +16,8 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <div className="border rounded-xl border-gray-600 shadow-md p-4 flex flex-col">
+            <Link href={`/product-details/${product.id}`}>
+
       {/* Image wrapper */}
       <div className="relative h-40 w-full rounded overflow-hidden">
         <Image
@@ -34,6 +36,8 @@ export default function ProductCard({ product }: { product: Product }) {
       <p className="mb-1 text-sm text-gray-900 line-clamp-2">
         ₹{product.price}
       </p>
+            </Link>
+
       <button
         onClick={() =>
           addToCart({
