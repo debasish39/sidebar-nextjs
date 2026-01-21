@@ -10,11 +10,12 @@ export default function CheckoutPage() {
   const router = useRouter();
   const [upiId, setUpiId] = useState("sonupanda0999-1@okhdfcbank");
   const [showUpi, setShowUpi] = useState(false);
-const maskUpi = (upi) => {
+const maskUpi = (upi: string = ""): string => {
+  if (!upi.includes("@")) return "******";
   const [name, bank] = upi.split("@");
-  console.log(name,bank)
   return `${name.slice(0, 2)}******@${bank}`;
 };
+
 
   // 🔗 UPI INTENT URL
   const upiUrl = `upi://pay?pa=${upiId}&pn=JSK Store&am=${totalPrice}&cu=INR&tn=Order Payment`;
@@ -156,7 +157,7 @@ const maskUpi = (upi) => {
     onCopy={(e) => !showUpi && e.preventDefault()}
     onCut={(e) => e.preventDefault()}
     className="border w-full px-3 py-2.5 rounded-lg text-sm
-               bg-gray-100 font-mono cursor-default select-none"
+               bg-gray-100 font-mono cursor-default select-none" placeholder="UPI ID"
   />
 
   {!showUpi && (

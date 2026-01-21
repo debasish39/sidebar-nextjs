@@ -82,6 +82,7 @@ export default function ProductDetailPage() {
                 addToCart({
                   id: product.id,
                   title: product.title,
+                  description: product.description,
                   thumbnail: product.thumbnail,
                   price: product.price,
                 })
